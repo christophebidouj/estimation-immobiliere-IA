@@ -435,7 +435,7 @@ if bouton_estimer:
                             
                         st.metric(
                             "📐 Prix au m²",
-                            f"{prix_m2:,.0f} €/m²".replace(",", " "),
+                            f"{prix_m2:,.0f}  €/m²".replace(",", " "),
                             delta=delta,
                             help="Prix par mètre carré habitable avec indicateur de cohérence"
                         )
@@ -467,7 +467,7 @@ if bouton_estimer:
                             
                             st.metric(
                                 "🎯 Évaluation",
-                                qualite,
+                                delta,
                                 help="Évaluation qualité/prix pour la zone"
                             )
                     
