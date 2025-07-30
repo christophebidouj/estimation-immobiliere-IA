@@ -586,7 +586,7 @@ with st.expander("🎯 Conseils d'expert immobilier"):
 # Information sur la technologie
 with st.expander("🧑‍💻 À propos du projet et de ses technologies"):
     st.markdown("""
-    **Projet pédagogique d'éxploration de données**
+    **Projet pédagogique d'exploration de données**
     *développé par **Bidouj Christophe***
 
     **Exploration** de l'IA appliquée aux données immobilières françaises.
