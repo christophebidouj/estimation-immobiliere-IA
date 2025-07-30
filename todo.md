@@ -14,16 +14,9 @@ Ces étapes ont pour but de clôturer proprement le projet d'estimation de prix 
 - Ajouter des commentaires explicatifs là où c’est utile.
 - Retoucher les noms de variables ou sections peu claires si besoin.
 
-## 3. 🗃️ Création du dépôt Git
-- Créer un compte GitHub .
-- Initialiser un dépôt Git dans le dossier.
-- Ajouter un `.gitignore` (exclure les fichiers `.csv`, `.pkl`, etc.).
-- Commits clairs et organisés.
-
-## 4. 🚀 Mise en ligne
-- Publier l’application sur [Streamlit Cloud](https://streamlit.io/cloud) ou une autre plateforme.
-- Vérifier que le lien fonctionne correctement.
+## 3. 🗃️ Derniere ligne droite
 - Ajouter l’URL dans le `README.md`.
+- corriger estimation pour appartement dans le resultat de la recherche 
 
 ---
 
