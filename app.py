@@ -3,10 +3,10 @@
 INTERFACE STREAMLIT IMMOBILIÈRE - VERSION PÉDAGOGIQUE
 ===========================================================
 
-Ce fichier montre comment créer une belle interface web avec Streamlit
+Ce fichier créer une belle interface web avec Streamlit
 pour utiliser notre modèle d'IA immobilière.
 
-Streamlit transforme du code Python en application web facilement !
+Streamlit transforme du code Python en application web !
 """
 
 import streamlit as st
@@ -466,8 +466,7 @@ if bouton_estimer:
                                 qualite = f"📍 {type_bien}"
                             
                             st.metric(
-                                "🎯 Évaluation",
-                                qualite,
+                                "🎯 Évaluation",                                
                                 help="Évaluation qualité/prix pour la zone"
                             )
                     

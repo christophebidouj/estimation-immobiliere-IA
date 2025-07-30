@@ -93,7 +93,7 @@ L'application permet de :
 
 ## 🔗 Mise en ligne
 
-L’application est disponible ici : *(ajouter lien Streamlit Cloud ou Hugging Face)*
+L’application est disponible ici : (https://estimation-immobiliere-par-intelligence-artificielle.streamlit.app/)
 
 
 
@@ -102,7 +102,6 @@ L’application est disponible ici : *(ajouter lien Streamlit Cloud ou Hugging F
 - **Langage** : Python 3.11
 - **Data Science** : pandas, numpy, scikit-learn
 - **Interface** : Streamlit
-- **Visualisation (prévue)** : plotly
 - **IDE** : Visual Studio Code
 
 
@@ -126,12 +125,6 @@ Projet développé par **Christophe Bidouj**, dans le cadre d’un **apprentissa
 Il s’agit d’un projet d’exploration pédagogique, visant à mettre en pratique des compétences en manipulation de données, modélisation, et création d'applications interactives.
 
 
-
-## 🔮 Prochaines améliorations (optionnelles)
-
-- [ ] Visualisation des écarts entre estimation et réalité
-- [x] Suppression des départements / GPS au profit d’un code postal simplifié
-- [x] Mise en ligne d’une application fonctionnelle
 
 
 
