@@ -466,7 +466,8 @@ if bouton_estimer:
                                 qualite = f"📍 {type_bien}"
                             
                             st.metric(
-                                "🎯 Évaluation",                                
+                                "🎯 Évaluation",
+                                qualite,
                                 help="Évaluation qualité/prix pour la zone"
                             )
                     
