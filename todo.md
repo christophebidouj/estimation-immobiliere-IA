@@ -17,6 +17,7 @@ Ces étapes ont pour but de clôturer proprement le projet d'estimation de prix 
 ## 3. 🗃️ Derniere ligne droite
 - Ajouter l’URL dans le `README.md`.
 - corriger estimation pour appartement dans le resultat de la recherche 
+- theme blanc blablabla
 
 ---
 
