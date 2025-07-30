@@ -249,7 +249,7 @@ with st.sidebar:
     st.info("🛡️ Sécurités anti-aberrations")
     
     st.markdown("### 💡 Conseil")
-    st.caption("Pour une estimation précise, renseignez tous les champs disponibles.")
+    st.caption("Pour une estimation précise, renseignez tous les champs disponibles")
 
 # Formulaire principal
 st.markdown("### 📋 Caractéristiques de votre bien immobilier")
@@ -541,7 +541,7 @@ if bouton_estimer:
                     st.markdown("### ⚠️ Informations importantes")
                     
                     st.warning(f"""
-                    **Cette estimation est fournie à titre indicatif** et ne constitue pas une expertise immobilière officielle.
+                    **Cette estimation est fournie à titre indicatif** et ne constitue pas une expertise immobilière officielle
                     
                     **Spécificités de cette estimation :**
                     • Correction automatique v3 appliquée (facteur {prix_final/prix_ia:.2f}x)                  
@@ -553,7 +553,7 @@ if bouton_estimer:
                     • Marché local très récent 
                     
                     **Pour une transaction :** Consultez un professionnel de l'immobilier pour une expertise détaillée 
-                    tenant compte de tous les facteurs spécifiques à votre bien.
+                    tenant compte de tous les facteurs spécifiques à votre bien
                     """)
                     
             except Exception as e:
@@ -589,7 +589,7 @@ with st.expander("🧑‍💻 À propos du projet et de ses technologies"):
     **Projet pédagogique d'exploration de données**
     *développé par **Bidouj Christophe***
 
-    **Exploration** de l'IA appliquée aux données immobilières françaises.
+    **Exploration** de l'IA appliquée aux données immobilières françaises
 
     **Expérimentations :**
     • Expérimentation sur dataset massif (1M+ transactions DVF)

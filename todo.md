@@ -15,10 +15,8 @@ Ces étapes ont pour but de clôturer proprement le projet d'estimation de prix 
 - Retoucher les noms de variables ou sections peu claires si besoin.
 
 ## 3. 🗃️ Derniere ligne droite
-- Ajouter l’URL dans le `README.md`.
-- corriger estimation pour appartement dans le resultat de la recherche 
-- theme blanc blablabla
-- retirer les . dans les phrases de l'app pour uniformiser
+
+- theme blanc
 
 ---
 
