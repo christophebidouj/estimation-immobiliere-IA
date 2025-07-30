@@ -532,8 +532,7 @@ if bouton_estimer:
                             st.write("• Hauteur sous plafond")
                             st.write("• Charges de copropriété")
                         
-                        st.markdown("**Pour une vente optimale :**")
-                        st.write("• Faire réaliser un diagnostic de performance énergétique")
+                        st.markdown("💰 **Pour une vente optimale :**")                        
                         st.write("• Considérer des travaux de rafraîchissement")
                         st.write("• Mettre en valeur les points forts uniques")
                         st.write("• Consulter plusieurs agents immobiliers locaux")
@@ -579,16 +578,16 @@ with st.expander("🎯 Conseils d'expert immobilier"):
     • Considérez la dynamique du marché local actuel
     
     **Signal d'alarme :**
-    • Si estimation très différente d'attentes → vérifiez paramètres
-    • Prix/m² > 15000€ hors Paris → probablement surestimé
-    • Écart > 30% avec autres estimations → expertise conseillée
+    • Si estimation très différente des attentes → vérifiez les paramètres
+    • Prix/m² > 15 000 € hors Paris → probablement surestimé
+    • Écart > 30 % avec autres estimations → expertise conseillée
     """)
 
 # Information sur la technologie
 with st.expander("🧑‍💻 À propos du projet et de ses technologies"):
     st.markdown("""
-    **Projet Pédagogique d'Exploration de Données**
-    *Développé par **Bidouj Christophe***
+    **Projet pédagogique d'éxploration de données**
+    *développé par **Bidouj Christophe***
 
     **Exploration** de l'IA appliquée aux données immobilières françaises.
 

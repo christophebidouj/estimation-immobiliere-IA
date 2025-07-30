@@ -18,6 +18,8 @@ Ces étapes ont pour but de clôturer proprement le projet d'estimation de prix 
 - Ajouter l’URL dans le `README.md`.
 - corriger estimation pour appartement dans le resultat de la recherche 
 - theme blanc blablabla
+- rajouter une icode pour une vente optimale dans la reco pour votre bien 
+- retirer • Faire réaliser un diagnostic de performance énergétique
 
 ---
 
