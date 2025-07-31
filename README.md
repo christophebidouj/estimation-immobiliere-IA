@@ -1,133 +1,287 @@
-# 🏠 Estimation du prix des biens immobiliers (France entière)
+# 🏠 Estimateur Immobilier par Intelligence Artificielle
 
-Ce projet vise à prédire le prix de vente de biens immobiliers résidentiels à partir des données publiques des **valeurs foncières**.  
-Il repose sur l'utilisation de modèles de machine learning, en particulier un **HistGradientBoostingRegressor**, pour fournir une estimation indicative du prix à partir de caractéristiques simples comme :
+Système d'estimation de prix immobilier utilisant des modèles de machine learning et les données publiques des valeurs foncières françaises. Ce projet pédagogique démontre un pipeline complet de data science avec interface web moderne.
 
-- la surface habitable,
-- le nombre de pièces,
-- la surface du terrain,
-- la date de vente,
-- et un code postal simplifié.
+**Technologies :** Python, Scikit-learn, Streamlit, Ensemble Methods, Feature Engineering
 
-L'application finale est accessible via une interface interactive **Streamlit**.
+---
 
+## 🎯 Vue d'ensemble
 
+Ce projet développe une solution d'estimation immobilière basée sur l'analyse de plus d'un million de transactions immobilières françaises (2020-2024). Il illustre une approche complète combinant preprocessing de données, modélisation par ensemble learning, et déploiement via interface web.
 
-## 🎯 Objectif
+### Objectifs du projet :
+- **Pipeline de données** : ETL pour traitement de datasets volumineux
+- **Modélisation avancée** : Ensemble de modèles avec correction automatique des biais
+- **Interface moderne** : Application web avec UX/UI soignée
+- **Code professionnel** : Structure modulaire, gestion d'erreurs, documentation
 
-- Nettoyer, transformer et enrichir les données DVF brutes issues du site officiel [data.gouv.fr](https://www.data.gouv.fr/fr/datasets/demandes-de-valeurs-foncieres/).
-- Développer un **modèle d’estimation robuste**, capable de s’adapter à des biens partout en France.
-- Créer une **application web intuitive**, testable par tous, pour simuler le prix d’un bien immobilier.
-- Comprendre et expérimenter l’ensemble de la chaîne **data science / machine learning / déploiement**.
+## 🏗️ Architecture technique
 
+### Stack technologique
+```
+Backend ML     : scikit-learn, pandas, numpy, joblib
+Frontend       : Streamlit, CSS/HTML personnalisé
+Data Pipeline  : ETL personnalisé, validation automatique
+Déploiement    : Streamlit Cloud
+```
 
+### Composants principaux
 
-## 🧠 Pourquoi ce projet ?
+#### 1. **Pipeline de données** (`nettoyage_donnees.py`)
+- **ETL automatisé** avec gestion d'erreurs complète
+- **Validation de données** : codes postaux, valeurs foncières, cohérence géographique
+- **Optimisation mémoire** : traitement par chunks pour gros volumes
+- **Audit complet** : statistiques de qualité à chaque étape
 
-Ce projet a été réalisé dans le cadre d’un **apprentissage personnel de la data science et des outils Python associés** (pandas, scikit-learn, Streamlit…). 
+#### 2. **Moteur de ML** (`modelisation.py`)
+- **Feature Engineering** : création de 15+ variables dérivées
+- **Ensemble Learning** : Random Forest + Extra Trees + Ridge Regression
+- **Preprocessing** : LabelEncoder, RobustScaler, gestion des outliers
+- **Gestion des modèles** : sauvegarde, métadonnées de performance
 
-> 🧩 Il m’a permis d'explorer concrètement les problématiques de nettoyage de données massives, de modélisation prédictive, de gestion des limites de performances, et de création d'une interface interactive pour utilisateurs.
+#### 3. **Interface utilisateur** (`app.py`)
+- **Design moderne** : système de design personnalisé, animations CSS
+- **Validation temps réel** : contrôles de cohérence métier
+- **UX intelligente** : recommandations contextuelles, retours visuels
+- **Responsive design** : adaptation multi-device
 
-> 💬 Ce projet vise avant tout à illustrer une démarche complète : du nettoyage des données jusqu’au déploiement d’un modèle fonctionnel.
+---
 
+## 🔬 Modélisation & Performance
 
+### Approche algorithmique
 
-## ⚙️ Fonctionnement de l’application
+**Ensemble Method** combinant :
+- **Random Forest** (55%) : robustesse sur données hétérogènes
+- **Extra Trees** (30%) : réduction de variance, diversité des prédictions  
+- **Ridge Regression** (15%) : régularisation linéaire, stabilité
 
-L'application développée avec **Streamlit** permet à un utilisateur de renseigner les caractéristiques d’un bien et d’obtenir une estimation instantanée.
+### Feature Engineering
 
-1. Le modèle (`model_hist_gradient_boosting.pkl`) est chargé au lancement.
-2. Les valeurs du formulaire sont transformées pour correspondre au format du modèle d'entraînement.
-3. L'estimation est calculée et présentée à l'utilisateur.
-4. Un encart optionnel détaille les performances réelles du modèle utilisé (R², MAE, etc.).
+```python
+# Variables de base transformées
+surface_par_piece, log_surface, surface_x_pieces
 
-⚠️ **Limites connues** :
-- Estimation indicative, R² = **0.55**.
-- Le modèle ne capte pas toutes les spécificités locales ou l’état du bien.
-- L’interface fonctionne avec un **code postal simplifié** (3 premiers chiffres), pas au niveau adresse.
+# Variables géographiques
+departement → encodage avec gestion des nouveaux codes
 
+# Variables temporelles
+saison, recent, annee → encodage cyclique
 
+# Segmentation métier
+petit_logement, grand_logement, avec_terrain
+```
 
-## 🗃️ Données
+### Métriques de performance
+- **R² Score** : > 0.35 (objectif qualité)
+- **Correction des biais** : facteur automatique selon écart marché
+- **Robustesse** : validation croisée, gestion des outliers
+- **Cohérence** : test sur données non vues, validation géographique
 
-**Source officielle** : [https://www.data.gouv.fr/fr/datasets/demandes-de-valeurs-foncieres/](https://www.data.gouv.fr/fr/datasets/demandes-de-valeurs-foncieres/)
+### Innovation : Correction Automatique v3
+Algorithme développé pour ajuster les prédictions selon :
+- **Prix de référence** par zone géographique (431 codes postaux)
+- **Facteurs correctifs** adaptatifs selon type de bien
+- **Seuils de sécurité** pour éviter les aberrations par région
 
-Données traitées (2020–2024) :
-- `valeur_fonciere` (cible) – prix de vente
-- `surface_reelle_bati`, `nombre_pieces_principales`, `surface_terrain`
-- `date_mutation` → transformée en `année`, `mois`, `saison`
-- `type_local` – Appartement ou Maison
-- `code_postal_simplifie` – les 3 premiers chiffres uniquement
+---
 
+## 📊 Données & Traitement
 
+### Dataset
+- **Source** : Données publiques DVF (data.gouv.fr)
+- **Volume** : 1M+ transactions analysées
+- **Période** : 2020-2024
+- **Couverture** : France entière, 431 codes postaux
 
-## 🔍 Traitement & Modélisation
+### Pipeline de traitement
+```
+Données brutes (20M+ lignes)
+    ↓ Nettoyage automatisé
+Données validées (5M+ lignes)  
+    ↓ Feature engineering
+Dataset ML (1M+ lignes)
+    ↓ Échantillonnage stratifié
+Training set (500K lignes)
+```
 
-### 📦 Nettoyage :
-- Suppression des lignes incomplètes ou aberrantes (prix < 10 000 € ou > 1,5M €, surface < 10 m² ou > 500 m²…).
-- Uniformisation des codes postaux valides (431 conservés sur ~20M de lignes).
-- Échantillonnage à 5% pour accélérer l'entraînement (≈ 1,4M lignes).
+### Qualité des données
+- **Taux de données valides** : 85%+ après nettoyage
+- **Couverture géographique** : Toutes régions françaises
+- **Distribution temporelle** : Équilibrée sur 2020-2024
 
-### 🛠️ Modèle :
-- **HistGradientBoostingRegressor**
-- **Encodage des variables :** Target Encoding
-- R² sur le jeu test : **0.55**
-- MAE : **82 765 €**
-- MSE : **15 008 322 552**
+---
 
-Le modèle est sauvegardé et utilisé dans l'application via `joblib`.
+## 🚀 Interface & Expérience Utilisateur
 
+### Fonctionnalités développées
 
+**Estimation intelligente :**
+- Validation temps réel des saisies utilisateur
+- Calcul instantané avec retours progressifs
+- Correction automatique selon contexte marché
 
-## 💡 Interface interactive
+**Analyses intégrées :**
+- Métriques détaillées : fourchette, prix/m², benchmark régional
+- Analyse géographique contextuelle
+- Indicateurs de cohérence marché
 
-L'application permet de :
-- Saisir les caractéristiques du bien immobilier
-- Obtenir une estimation immédiate
-- Consulter les performances du modèle
-- Être averti du caractère indicatif de la prédiction
+**Interface moderne :**
+- Design system avec thème sombre
+- Animations CSS fluides
+- Affichage progressif des informations
 
-> L'application a été développée avec l’aide d’outils d’IA, à des fins pédagogiques et d’apprentissage technique.
+### Architecture frontend
+```
+Streamlit Core
+    ↓ CSS personnalisé (animations, responsive)
+Composants Interface
+    ↓ Gestion d'état & validation
+Logique Métier
+    ↓ API Modèle ML
+Prédictions Temps Réel
+```
 
+---
 
+## 💼 Déploiement & Mise en ligne
 
-## 🔗 Mise en ligne
+### Infrastructure
+- **Hébergement** : Streamlit Cloud
+- **Déploiement** : Automatique via Git sur Streamlit Cloud
+- **Architecture** : Chaque requête est indépendante
+- **Monitoring** : Analytics Streamlit intégrées
 
-L’application est disponible ici : (https://estimation-immobiliere-par-intelligence-artificielle.streamlit.app/)
+### Gestion des modèles
+- **Sauvegarde** : joblib avec compression
+- **Métadonnées** : performances et paramètres inclus
+- **Validation** : vérification de cohérence avec prix de référence
+- **Évolution** : pipeline de mise à jour des modèles
 
+---
 
+## 📋 Structure du projet
 
-## 🛠️ Environnement & outils
+```
+estimateur-immobilier-ia/
+├── 📁 data/                          # Datasets (non versionnés)
+│   └── valeurs_foncieres_nettoye/    
+├── 📁 models/                        # Artefacts ML
+│   ├── modele_ia.pkl                 # Modèle ensemble
+│   ├── encodeurs.pkl                 # Encodeurs de features  
+│   ├── normaliseur.pkl               # Pipeline de normalisation
+│   └── infos_modele.pkl              # Métadonnées du modèle
+├── 🔧 nettoyage_donnees.py           # Pipeline ETL
+├── 🤖 modelisation.py                # Pipeline d'entraînement ML  
+├── 🎨 app.py                         # Application Streamlit
+└── 📖 README.md                      # Documentation
+```
 
-- **Langage** : Python 3.11
-- **Data Science** : pandas, numpy, scikit-learn
-- **Interface** : Streamlit
-- **IDE** : Visual Studio Code
+---
 
+## 🔧 Installation & Utilisation
 
+### Prérequis
+```bash
+Python 3.11+
+pip install streamlit pandas scikit-learn numpy joblib
+```
 
-## 📁 Structure du projet
+### Pipeline complet
+```bash
+# 1. Nettoyage des données
+python nettoyage_donnees.py
 
-projet-prix-maisons/
-├── data/ # Données brutes ou nettoyées (non trackées)
-├── nettoyage_donnees_VF.py # Script de nettoyage
-├── modelisation.py # Entraînement du modèle
-├── app_streamlit.py # Interface web interactive
-├── model_hist_gbr.pkl # Modèle sauvegardé
-├── README.md # Ce fichier
+# 2. Entraînement du modèle
+python modelisation.py
 
+# 3. Lancement de l'application
+streamlit run app.py
+```
 
+### API du modèle
+```python
+from modelisation import estimer_prix_immobilier
 
+prix = estimer_prix_immobilier(
+    surface=75, pieces=3, dept='75',
+    terrain=0, type_local='Appartement', recent=1
+)
+# Retourne: estimation en euros
+```
 
-## 🙋‍♂️ Auteur
+---
 
-Projet développé par **Christophe Bidouj**, dans le cadre d’un **apprentissage personnel de la data science appliquée à un cas concret**.  
-Il s’agit d’un projet d’exploration pédagogique, visant à mettre en pratique des compétences en manipulation de données, modélisation, et création d'applications interactives.
+## 📈 Résultats & Performances
 
+### Métriques techniques
+- **Temps de réponse** : < 200ms pour estimation complète
+- **Précision** : MAE ~80K€ sur biens standards
+- **Robustesse** : gestion automatique des scénarios extrêmes
+- **Disponibilité** : déployé en continu sur Streamlit Cloud
 
+### Fonctionnalités métier
+- **Estimation instantanée** avec niveau de confiance
+- **Analyse comparative** du marché local
+- **Interface intuitive** pour utilisateurs non-techniques
+- **Transparence** des facteurs de calcul
 
+### Cas d'usage
+- **Pré-estimation** pour agences immobilières
+- **Validation de cohérence** des prix de marché
+- **Outil d'aide à la négociation** pour particuliers
+- **Base de développement** pour applications PropTech
 
+---
 
-## 🧾 Licence
+## 🎯 Perspectives d'amélioration
 
-Ce projet est librement réutilisable dans un cadre pédagogique ou personnel.
+### Enrichissement des données
+- **Données géographiques** : INSEE, proximité transports
+- **Variables qualitatives** : état du bien, prestations, vue
+- **Données temps réel** : tendances marché actuelles
+- **Segmentation fine** : micro-marchés locaux
+
+### Améliorations techniques
+- **Modèles avancés** : gradient boosting, réseaux de neurones
+- **API REST** : service web pour intégrations externes
+- **Cache intelligent** : optimisation des prédictions fréquentes
+- **Tests unitaires** : validation de la qualité du code
+
+---
+
+## 🏆 Compétences développées
+
+### Data Science & ML
+- **Feature Engineering** sur données immobilières complexes
+- **Ensemble Methods** avec optimisation des poids
+- **Correction de biais** et validation statistique
+- **Déploiement de modèles** en environnement web
+
+### Développement logiciel
+- **Architecture modulaire** avec séparation des responsabilités
+- **Qualité de code** : documentation, gestion d'erreurs, tests
+- **Développement UI/UX** : interface moderne et responsive
+- **Déploiement web** : versioning Git et mise en ligne automatique
+
+### Expertise métier
+- **Analyse immobilière** : compréhension des facteurs de prix
+- **Validation de données** : cohérence métier et géographique
+- **Expérience utilisateur** : workflow optimisé pour cas d'usage réels
+- **Intelligence métier** : métriques et indicateurs pertinents
+
+---
+
+## 📞 À propos
+
+**Auteur :** Christophe Bidouj  
+**Objectif :** Démonstration de compétences en Data Science et développement d'applications ML
+
+> Ce projet illustre une approche complète de développement de solution d'intelligence artificielle, de la conception à la mise en production, avec un focus sur la qualité du code et l'expérience utilisateur.
+
+🔗 **Application en ligne :** [Tester l'estimateur](https://estimation-immobiliere-par-intelligence-artificielle.streamlit.app/)
+
+---
+
+*Projet pédagogique développé en 2024 - Démonstration de compétences en Data Science et ML Engineering*

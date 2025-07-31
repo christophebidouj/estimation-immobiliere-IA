@@ -11,6 +11,11 @@ Streamlit transforme du code Python en application web !
 
 import streamlit as st
 import numpy as np
+import warnings
+
+# Supprimer les warnings sklearn pour une interface plus propre
+warnings.filterwarnings('ignore', category=UserWarning, module='sklearn')
+warnings.filterwarnings('ignore', message='X does not have valid feature names')
 
 # Configuration de la page web
 st.set_page_config(
@@ -20,7 +25,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# CSS personnalisé pour un bouton d'estimation plus attrayant
+# CSS personnalisé pour le bouton d'estimation et le bloc de résultat
 st.markdown("""
 <style>
     /* Style pour le bouton d'estimation */
@@ -59,29 +64,37 @@ st.markdown("""
     .stButton > button {
         animation: pulse 2s infinite !important;
     }
-</style>
-""", unsafe_allow_html=True)
-
-# Force le thème sombre via CSS personnalisé
-st.markdown("""
-<style>
-    .stApp {
-        background-color: #0e1117;
-        color: #fafafa;
+    
+    /* Style pour le bloc de résultat - adaptatif selon le thème */
+    .price-result-box {
+        text-align: center;
+        padding: 30px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 15px;
+        color: white !important;
+        margin: 20px 0;
+        box-shadow: 0 8px 32px rgba(102, 126, 234, 0.2);
     }
-    .stApp > header {
-        background-color: transparent;
+    
+    .price-value {
+        color: white !important;
+        margin: 0 !important;
+        font-size: 2.8em !important;
+        font-weight: bold !important;
     }
-    .stSelectbox > div > div {
-        background-color: #262730;
+    
+    .price-label {
+        color: white !important;
+        margin: 10px 0 !important;
+        font-size: 1.2em !important;
+        opacity: 0.9;
     }
-    .stNumberInput > div > div > input {
-        background-color: #262730;
-        color: #fafafa;
-    }
-    .stTextInput > div > div > input {
-        background-color: #262730;
-        color: #fafafa;
+    
+    .price-description {
+        color: white !important;
+        margin: 0 !important;
+        font-size: 0.95em !important;
+        opacity: 0.8;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -220,7 +233,7 @@ def valider_donnees_utilisateur(surface, pieces, code_postal, terrain, type_bien
         erreurs.append("⚠️ La surface semble très importante (plus de 1000 m²)")
     
     # Vérification cohérence terrain/surface
-    if terrain > 0 and surface > terrain:
+    if terrain >= 0 and surface > terrain and type_bien != 'Appartement' and type_bien!= 'Local' :
         erreurs.append("⚠️ La surface habitable ne peut pas être plus grande que le terrain")
     
     # Vérifications spéciales pour les maisons
@@ -373,14 +386,12 @@ if bouton_estimer:
                     # ===== AFFICHAGE DU RÉSULTAT =====
                     st.markdown("### 💰 Estimation du prix immobilier")
                     
-                    # Prix principal avec un beau design
+                    # Prix principal avec un design adaptatif
                     st.markdown(f"""
-                    <div style='text-align: center; padding: 30px; 
-                         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                         border-radius: 15px; color: white; margin: 20px 0; box-shadow: 0 8px 32px rgba(0,0,0,0.1);'>
-                        <h1 style='color: white; margin: 0; font-size: 2.8em; font-weight: bold;'>{prix_final:,.0f} €</h1>
-                        <p style='margin: 10px 0; font-size: 1.2em; opacity: 0.9;'>Prix estimé</p>
-                        <p style='margin: 0; font-size: 0.95em; opacity: 0.8;'>Estimation par IA avec correction de marché optimisée</p>
+                    <div class="price-result-box">
+                        <h1 class="price-value">{prix_final:,.0f} €</h1>
+                        <p class="price-label">Prix estimé</p>
+                        <p class="price-description">Estimation par IA avec correction de marché optimisée</p>
                     </div>
                     """.replace(",", " "), unsafe_allow_html=True)
                     

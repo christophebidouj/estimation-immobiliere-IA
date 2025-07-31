@@ -24,6 +24,8 @@ from sklearn.linear_model import Ridge
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import RobustScaler, LabelEncoder
 from sklearn.metrics import mean_absolute_error, r2_score
+import warnings
+warnings.filterwarnings('ignore', category=UserWarning, module='sklearn')
 
 # Configuration simple
 TAILLE_ECHANTILLON = 500_000  # Nombre de lignes à utiliser
