@@ -14,15 +14,19 @@ Estimation de prix à partir des données DVF (data.gouv.fr) — 1M+ transaction
 
 ## Modélisation
 
-Ensemble **RF (55%) + ExtraTrees (30%) + Ridge (15%)**, poids fixés par validation croisée. RF pour les non-linéarités, ET pour réduire la variance, Ridge pour stabiliser les extrêmes.
+**Ensemble RF (55%) + ExtraTrees (30%) + Ridge (15%)**, poids fixés par validation croisée. RF capte les non-linéarités sur données hétérogènes, ET réduit la variance par randomisation accrue, Ridge stabilise les prédictions aux extrêmes.
 
-Correction post-prédiction par zone géographique (431 codes postaux) plutôt qu'encodage géographique en feature, pour éviter le surapprentissage sur les micro-marchés.
+**Transformation logarithmique du prix cible** (`log1p` à l'entraînement, `expm1` à la prédiction) — les prix immobiliers ont une distribution très asymétrique avec quelques valeurs extrêmes légitimes ; le log normalise cette distribution et réduit l'impact des outliers sur l'erreur.
 
-RobustScaler (médiane/IQR) à la place de StandardScaler, les prix immobiliers ayant des distributions très asymétriques.
+**RobustScaler** (médiane/IQR) plutôt que StandardScaler — même raison : les châteaux et biens atypiques ne doivent pas distordre la normalisation des features.
+
+**Correction post-prédiction en deux étapes** plutôt qu'encodage géographique fin en feature (risque de surapprentissage) :
+- Étape 1 (`modelisation.py`) : facteur correctif global calculé sur l'écart moyen train/prédiction
+- Étape 2 (`app.py`) : blend ML + prix de référence par zone (~33 zones : arrondissements parisiens, départements IDF, grandes métropoles), avec intensité variable selon l'écart entre prédiction et marché
 
 ## Résultats
 
-R² > 0.35 — MAE ~80K€ — < 200ms par estimation — 431 zones corrigées
+R² > 0.35 — MAE ~80K€ — < 200ms par estimation — ~33 zones de référence
 
 ## Structure
 
