@@ -553,10 +553,7 @@ if bouton_estimer:
                     
                     st.warning(f"""
                     **Cette estimation est fournie à titre indicatif** et ne constitue pas une expertise immobilière officielle
-                    
-                    **Spécificités de cette estimation :**
-                    • Correction automatique v3 appliquée (facteur {prix_final/prix_ia:.2f}x)                  
-                                        
+
                     **Facteurs non pris en compte par l'IA :**
                     • État général du bien et travaux nécessaires
                     • Vue, exposition et prestations spéciales
@@ -595,23 +592,20 @@ with st.expander("🎯 Conseils d'expert immobilier"):
     """)
 
 # Information sur la technologie
-with st.expander("🧑‍💻 À propos du projet et de ses technologies"):
+with st.expander("🧑‍💻 À propos du projet"):
     st.markdown("""
-    **Projet pédagogique d'exploration de données**
     *développé par **Bidouj Christophe***
 
-    **Exploration** de l'IA appliquée aux données immobilières françaises
+    Estimateur de prix immobilier entraîné sur les données DVF (data.gouv.fr) — 1M+ transactions, France entière, 2020-2024.
 
-    **Expérimentations :**
-    • Expérimentation sur dataset massif (1M+ transactions DVF)
-    • Exploration pratique du machine learning en contexte réel
-    • Étude des biais et corrections sur données immobilières
-    • Expérimentation sur données territoriales et financières
+    **Stack technique :**
+    • Machine learning : scikit-learn (RandomForest, ExtraTrees, Ridge)
+    • Ensemble RF (55%) + ExtraTrees (30%) + Ridge (15%)
+    • Correction de marché par zone géographique (~33 zones de référence)
+    • Déploiement : Streamlit Cloud
 
-    **Méthodes testées :**
-    • Analyse de patterns géographiques de prix
-    • Algorithmes de régression sur données complexes
-    • Corrections automatiques d'estimations
-
-    ⚠️ **Cadre pédagogique** : Expérimentation sur cas réel
+    **Données sources :**
+    • Demandes de Valeurs Foncières (DVF) — data.gouv.fr
+    • 5 années de transactions (2020-2024)
+    • Pipeline ETL : 20M → 1M lignes après filtrage
     """)
