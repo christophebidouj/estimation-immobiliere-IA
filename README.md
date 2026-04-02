@@ -28,6 +28,8 @@ Estimation de prix à partir des données DVF (data.gouv.fr) — 1M+ transaction
 
 R² > 0.35 — MAE ~80K€ — < 200ms par estimation — ~33 zones de référence
 
+> R² cohérent pour un modèle France entière sans données qualitatives (état du bien, étage, DPE).
+
 ## Structure
 
 - `nettoyage_donnees.py` — ETL : 20M → 1M lignes filtrées
