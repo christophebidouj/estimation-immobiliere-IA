@@ -48,6 +48,9 @@ python modelisation.py
 streamlit run app.py
 ```
 
+## Aperçu de l'application
 
+![Formulaire](assets/Formulaire_Estimation_Immo_Lyon.png)
+![Résultat](assets/Affichage_Estimation.png)
 
 **Auteur :** Christophe Bidouj
